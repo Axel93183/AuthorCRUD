@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Liste des Auteurs par noms</h1>
+
+    {% for author in authors %}
+    <p>{{author.name }}</p>
+    {% endfor %}
+
+    <a href="/admin/auteurs/nouveau">Ajouter Nouvel Auteur</a>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <style>
+       
+
+        /* pour aligner les labels et les champs de formulaire verticalement */
+        form label,
+        form input {
+            display: flex;
+            align-items: center;
+        }
+
+        /* pour donner une largeur fixe aux champs de formulaire */
+        form input[type="text"],
+        
+        {
+            width: 300px;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        form textarea{
+            width: 300px;
+            height: 300px;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+
+        }
+
+        /* pour styliser les boutons de formulaire */
+        form button {
+            display: block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px;
+            border: none;
+            cursor: pointer;
+            width: 10%;
+            height: 20%;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<form method="POST">
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name">
+  <br>
+  <label for="description">Description:</label>
+  <textarea id="description" name="description"></textarea>
+  <br>
+  <label for="imageUrl">Image URL:</label>
+  <input type="text" id="imageUrl" name="imageUrl">
+  <br>
+  <input type="submit" value="Submit">
+</form>
+{% endblock %}
