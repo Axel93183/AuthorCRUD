@@ -21,34 +21,33 @@ class AuthorController extends AbstractController
 
     #[Route('/admin/auteurs/nouveau', name: 'app_author_create')]
     public function create(Request $request, AuthorRepository $repository) : Response
-    {   
-        $request->isMethod('POST');
-        $authorData = $request->request->all();
-
-        $author = new Author();
-        $author->setName($authorData['name']);
-        $author->setDescription($authorData['description']);
-        $author->setImageUrl($authorData['imageUrl']);
-        
-        $repository->save($author, true);
+    {
+    if ($request->isMethod('POST')) {
+    $name=$request->request->get('name');
+    $description= $request->request->get('description');
+    $imageUrl= $request->request->get('imageUrl');
 
 
-        return $this->render('author/newAuthor.html.twig', [
-            'controller_name' => 'AuthorController',
+    $author = new Author();
+    $author->setName($name);
+    $author->setDescription($description);
+    $author->setImageUrl($imageUrl);
+
+    $repository->save($author, true);
+
+    return $this->redirectToRoute('app_author_list');
+}
+    return $this->render('author/newAuthor.html.twig');
+}
+
+    #[Route('/admin/auteurs', name: 'app_author_list')]
+
+    public function list(AuthorRepository $repository)
+    {
+        $authors = $repository->findAll();
+
+        return $this->render('author/list.html.twig', [
+            'authors' => $authors
         ]);
-        //$this->redirectToRoute('author_list');
-         
-
     }
-
-    // #[Route('/admin/auteurs', name: 'app_author_list')]
-
-    // public function list(AuthorRepository $repository)
-    // {
-    //     $authors = $repository->findAll();
-
-    //     return $this->render('author/list.html.twig', [
-    //         'authors' => $authors
-    //     ]);
-    // }
 }
