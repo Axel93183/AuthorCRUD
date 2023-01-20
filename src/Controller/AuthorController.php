@@ -50,4 +50,47 @@ class AuthorController extends AbstractController
             'authors' => $authors
         ]);
     }
+
+    #[Route('/admin/auteurs/{id}', name: 'app_author_update')]
+
+    public function update(AuthorRepository $repository, int $id, Request $request){
+        
+        $author=$repository->find($id);
+        
+        if ($request->isMethod('POST')) {
+      
+            $name=$request->request->get('name');
+            $description= $request->request->get('description');
+            $imageUrl= $request->request->get('imageUrl');
+                    
+            $author->setName($name);
+            $author->setDescription($description);
+            $author->setImageUrl($imageUrl);
+        
+            $repository->save($author, true);
+        
+            return $this->redirectToRoute('app_author_list');
+        }
+
+
+        return $this->render('author/update.html.twig', [
+            'authors' => $author
+        ]);
+    }
+
+    #[Route('/admin/auteurs/{id}/supprimer', name: 'app_author_remove')]
+    public function remove(int $id, AuthorRepository $repository): Response
+    {
+        //récuperer l'auteur depuis la base de données
+        $author= $repository->find($id);
+
+        //je supprime l'auteur
+        $repository->remove($author, true);
+
+        //redirection vers la liste des auteurs
+        return $this->redirectToRoute('app_author_list');
+    }
+
+
+
 }

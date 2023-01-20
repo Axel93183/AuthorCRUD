@@ -1,13 +1,52 @@
 {% extends 'base.html.twig' %}
+{% block title %}
+
+Liste Auteurs
+
+{% endblock %}
+{% block stylesheets %}
+  
+    <style>
+        /* pour center l'ensemble de la page */
+        .center {
+        width: 300px;
+        border-collapse: collapse;
+        }
+
+        /* pour ajouter une bordure à chaque auteur */
+        .author-list {
+        border: solid 2px #3498db;
+        text-align: left;
+        padding: 40px;
+       
+        }
+    </style>
+{% endblock %}
 
 {% block body %}
 
     <h1>Liste des Auteurs par noms</h1>
 
-    {% for author in authors %}
-    <p>{{author.name }}</p>
-    {% endfor %}
+        <div class="center">
 
-    <a href="/admin/auteurs/nouveau">Ajouter Nouvel Auteur</a>
+            
 
+                {% for author in authors %}
+
+            <div class="author-list">
+
+                <h3>{{author.name }}</h3>
+                <h4>{{author.description }}</h4>
+                <p>{{author.imageUrl }}</p>
+                <a href=" {{  path('app_author_update', {'id': author.id}) }}">Modifier</a>
+                <a href=" {{  path('app_author_remove', {'id': author.id}) }}">Supprimer</a>
+                
+            </div>
+
+                {% endfor %}
+
+        </div>
+
+    
+        
 {% endblock %}
