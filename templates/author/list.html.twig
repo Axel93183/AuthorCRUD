@@ -27,6 +27,10 @@ Liste Auteurs
 
     <h1>Liste des Auteurs par noms</h1>
 
+    <nav>
+    <a href=" {{  path('app_author_create') }}">Ajouter un auteur</a>
+    </nav>
+    
         <div class="center">
 
             
@@ -37,7 +41,9 @@ Liste Auteurs
 
                 <h3>{{author.name }}</h3>
                 <h4>{{author.description }}</h4>
-                <p>{{author.imageUrl }}</p>
+                <p>
+                <img src = "{{author.imageUrl }}" alt = "{{ author.name }}" />
+                </p>
                 <a href=" {{  path('app_author_update', {'id': author.id}) }}">Modifier</a>
                 <a href=" {{  path('app_author_remove', {'id': author.id}) }}">Supprimer</a>
                 

@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'author/newAuthor.html.twig' %}
 
 {% block title %}
 
@@ -51,17 +51,9 @@ Modification Auteur
     </style>
 {% endblock %}
 
-{% block body %}
-<form method="POST">
-  <label for="name">Name:</label>
-  <input type="text" id="name" name="name"/>
-  <br>
-  <label for="description">Description:</label>
-  <textarea id="description" name="description"></textarea>
-  <br>
-  <label for="imageUrl">Image URL:</label>
-  <input type="url" id="imageUrl" name="imageUrl"/>
-  <br>
-  <input type="submit" value="Modifier"/>
-</form>
-{% endblock %}
+
+
+    {% block pageTitle %} modifier l'auteur {{ author.name }} {% endblock %}
+    {% block nameValue %} {{ author.name }} {% endblock %}
+    {% block descriptionValue %} {{author.description}}  {% endblock %}
+    {% block imageUrlValue %} {{ author.imageUrl }} {% endblock %}
