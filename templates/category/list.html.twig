@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+  
+    <style>
+        /* pour center l'ensemble de la page */
+        .center {
+        width: 300px;
+        border-collapse: collapse;
+        }
+
+        /* pour ajouter une bordure à chaque categorie */
+        .category-list {
+        border: solid 2px #3498db;
+        text-align: left;
+        padding: 40px;
+       
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+<nav>
+    <a href=" {{  path('app_category_create') }}">Ajouter une catégorie</a>
+    </nav>
+    <br>
+
+<div class="center">
+
+    {% for category in Categories %}
+
+            <div class="category-list">
+
+                <h3>{{category.name }}</h3>
+                <a href=" {{  path('app_category_update', {'id': category.id}) }}">Modifier</a>
+                <a href=" {{  path('app_category_delete', {'id': category.id}) }}">Supprimer</a> 
+            </div>
+
+    {% endfor %}
+
+</div>
+
+    
+        
+{% endblock %}

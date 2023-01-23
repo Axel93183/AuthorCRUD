@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<form method="POST">
+  <label for="name">Nom de la Catégorie:</label>
+  <input type="text" id="name" name="name" value="{% block nameValue '' %}"/>
+  <input type="submit" value="Submit"/>
+</form>
+{% endblock %}
