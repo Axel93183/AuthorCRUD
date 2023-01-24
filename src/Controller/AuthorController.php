@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Author;
+use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -53,7 +54,7 @@ class AuthorController extends AbstractController
 
     #[Route('/admin/auteurs/{id}', name: 'app_author_update')]
 
-    public function update(AuthorRepository $repository, int $id, Request $request){
+    public function update(int $id, AuthorRepository $repository, Request $request){
         
         $author=$repository->find($id);
         
@@ -91,6 +92,85 @@ class AuthorController extends AbstractController
         return $this->redirectToRoute('app_author_list');
     }
 
+    #[Route('/auteurs/creation', name: 'app_author_newCreate')]
+    public function newCreate(AuthorRepository $repository, Request $request):Response
+    {
+        //création de l'objet PHP
+        $author= new Author();
 
+        //création du formulaire
+        $form= $this->createForm(AuthorType::class , $author);
+
+        //remplissage du formulaire et de l'objet php avec la requete
+        $form->handleRequest($request); 
+
+        //si le formulaire est envoyé et les données sont valides
+        if($form->isSubmitted() && $form->isValid()){
+
+            //recuperation de l'objet validé et remplie pas le formulaire
+            $validAuthor = $form->getData();
+
+            //enregistrer les donnée dans la bd
+            $repository->save($validAuthor, true);
+
+            //redirection vers la liste des auteurs
+            return $this->redirectToRoute('app_author_list');
+        }
+
+        //récuperation de la view du formulaire
+        $formView= $form->createView();
+
+        //affichage dans le template
+        return $this->render('author/authorCreateForm.html.twig' , [
+            'form' => $formView,
+        ]);
+
+
+        /* ou bien ecrire les deux instrcution dans une seule:
+
+         return $this->render('pizza/createForm.html.twig' ,[
+            'form' => $form->createView(),
+        ]); 
+
+        */
+    }
+    #[Route('/auteurs/updateForm/{id}', name: 'app_author_updateForm')]
+    public function updateForm(int $id, AuthorRepository $repository, Request $request):Response {
+
+        //Recupere les données de l'auteur avec son Id
+        $author = $repository->find($id);
+
+//------------------Puis ensuite même partie que la création------------------------//
+
+        //création du formulaire avec $author en parametre ( cela pre-rempli le formulaire de modification avec l'auteur choisi a partir de son id de la ligne:141 ) 
+        
+        $form= $this->createForm(AuthorType::class , $author);
+
+        //remplissage du formulaire et de l'objet php avec la requete
+        $form->handleRequest($request); 
+
+        //si le formulaire est envoyé et les données sont valides
+        if($form->isSubmitted() && $form->isValid()){
+
+            //recuperation de l'objet validé et remplie pas le formulaire
+            $validAuthor = $form->getData();
+
+            //enregistrer les donnée dans la bd
+            $repository->save($validAuthor, true);
+
+            //redirection vers la liste des auteurs
+            return $this->redirectToRoute('app_author_list');
+        }
+
+         //récuperation de la view du formulaire
+         $formView= $form->createView();
+
+         //affichage dans le template
+         return $this->render('author/updateForm.html.twig' , [
+             'form' => $formView,
+             'author'=> $author
+        ]);
+ 
+    }
 
 }

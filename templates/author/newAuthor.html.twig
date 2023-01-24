@@ -44,7 +44,13 @@
     </style>
 {% endblock %}
 
+{% block title %}Nouvel auteur{% endblock %}
+
 {% block body %}
+
+<h1>{% block pageTitle %} Nouvel auteur {% endblock %}</h1>
+
+
 <form method="POST">
   <label for="name">Name:</label>
   <input type="text" id="name" name="name" value="{% block nameValue '' %}"/>

@@ -44,7 +44,8 @@ Liste Auteurs
                 <p>
                 <img src = "{{author.imageUrl }}" alt = "{{ author.name }}" />
                 </p>
-                <a href=" {{  path('app_author_update', {'id': author.id}) }}">Modifier</a>
+                <a href=" {{  path('app_author_update', {'id': author.id}) }}">Modifier</a><br>
+                <a href=" {{  path('app_author_updateForm', {'id': author.id}) }}">Modifier avec SymfonyForm</a><br>
                 <a href=" {{  path('app_author_remove', {'id': author.id}) }}">Supprimer</a>
                 
             </div>
