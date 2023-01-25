@@ -25,8 +25,9 @@
 
 <h1>{% block pageTitle %}Liste des catégories{% endblock %}</h1>
 
-<nav>
-    <a href=" {{  path('app_category_create') }}">Ajouter une catégorie</a>
+    <nav>
+        <a href=" {{  path('app_category_create') }}">Ajouter une catégorie</a><br>
+        <a href=" {{  path('app_category_newCreate') }}">Ajouter une catégorie avec Symfonyform</a>
     </nav>
     <br>
 
@@ -37,7 +38,8 @@
             <div class="category-list">
 
                 <h3>{{category.name }}</h3>
-                <a href=" {{  path('app_category_update', {'id': category.id}) }}">Modifier</a>
+                <a href=" {{  path('app_category_update', {'id': category.id}) }}">Modifier</a><br>
+                <a href=" {{  path('app_category_updateForm', {'id': category.id}) }}">Modifier avec SymfonyForm</a><br>
                 <a href=" {{  path('app_category_delete', {'id': category.id}) }}">Supprimer</a> 
             </div>
 

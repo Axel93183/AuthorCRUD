@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Author;
-use App\Form\AuthorType;
+use App\Form\AdminAuthorType;
 use App\Repository\AuthorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -99,7 +99,7 @@ class AuthorController extends AbstractController
         $author= new Author();
 
         //création du formulaire
-        $form= $this->createForm(AuthorType::class , $author);
+        $form= $this->createForm(AdminAuthorType::class , $author);
 
         //remplissage du formulaire et de l'objet php avec la requete
         $form->handleRequest($request); 
@@ -144,7 +144,7 @@ class AuthorController extends AbstractController
 
         //création du formulaire avec $author en parametre ( cela pre-rempli le formulaire de modification avec l'auteur choisi a partir de son id de la ligne:141 ) 
         
-        $form= $this->createForm(AuthorType::class , $author);
+        $form= $this->createForm(AdminAuthorType::class , $author);
 
         //remplissage du formulaire et de l'objet php avec la requete
         $form->handleRequest($request); 

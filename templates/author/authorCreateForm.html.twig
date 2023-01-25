@@ -5,7 +5,9 @@
 {% block body %}
  
  
-    <h1>Nouvel Auteur</h1>
+    <h1>
+    {% block pageTitle %} Nouvel Auteur SymfonyForm {% endblock %}
+    </h1>
     {{ form(form) }}
 
 

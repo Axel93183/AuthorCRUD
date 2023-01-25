@@ -1,12 +1,15 @@
-{% extends 'base.html.twig' %}
+{% extends 'author/authorCreateForm.html.twig' %} 
+
+{# on hérite du formulaire qui figure dans ce twig : authorCreateForm.html.twig #}
 
 {% block title %}Modifier l'auteur{% endblock %}
 
-{% block body %}
+
  
  
-    <h1>Modifier l'auteur: {{author.name}}</h1>
-    {{ form(form) }}
+    {% block pageTitle %} 
+    Modifier l'auteur: {{author.name}} avec SymfonyForm
+    {% endblock %}
+   
 
 
-{% endblock %}
