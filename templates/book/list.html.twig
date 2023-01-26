@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des livres{% endblock %}
+
+{% block stylesheets %}
+  
+    <style>
+        /* pour center l'ensemble de la page */
+        .center {
+        width: 300px;
+        border-collapse: collapse;
+        }
+
+        /* pour ajouter une bordure à chaque categorie */
+        .book-list {
+        border: solid 2px #3498db;
+        text-align: left;
+        padding: 40px;
+        }
+
+        .small {
+        width: 100px;
+        height: 100px;
+        }
+    </style>
+
+{% endblock %}
+
+{% block body %}
+
+<h1>{% block pageTitle %}Liste des livres{% endblock %}</h1>
+
+    <nav>
+       
+        <a href=" {{  path('app_book_create') }}">Ajouter un livre à la liste avec Symfonyform</a>
+    </nav>
+    <br>
+
+<div class="center">
+
+    {% for book in Books %}
+
+            <div class="book-list">
+
+                <h2>{{book.title}}</h2>
+
+                <h3>{{book.author.name}}</h3>
+
+                {% for cat in book.categories %}
+                    <h5>{{cat.name}}</h5>
+                 {% endfor %}
+
+                    <h3>{{book.description}}</h3>
+                    <h3>{{book.price}} €</h3>
+
+                {% if book.imageUrl %}
+                    <img src={{book.imageUrl}} class="small" alt={{book.title}}>
+                {% endif %}
+            
+              
+                
+                
+                <a href=" {{  path('app_book_update', {'id': book.id}) }}">Modifier avec SymfonyForm</a><br>
+                <a href=" {{  path('app_book_remove', {'id': book.id}) }}">Supprimer</a> 
+            </div>
+
+    {% endfor %}
+
+</div>
+
+    
+        
+{% endblock %}

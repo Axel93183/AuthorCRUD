@@ -1,0 +1,10 @@
+{% extends 'book/bookCreateForm.html.twig' %} 
+
+{# on hérite du formulaire qui figure dans ce twig : bookCreateForm.html.twig #}
+
+{% block title %}Modifier le livre{% endblock %}
+
+    {% block pageTitle %} 
+    Modifier le livre: {{book.title}} avec SymfonyForm
+    {% endblock %}
+   
