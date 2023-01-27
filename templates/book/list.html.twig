@@ -48,10 +48,14 @@
 
                 {% for cat in book.categories %}
                     <h5>{{cat.name}}</h5>
-                 {% endfor %}
+                {% endfor %}
+{# si erreur : Impossible to access an attribute ("name") on a null variable Verifier si une maison d'edition a ete affecte a un livre #}
+                {% if book.publishinghouse %}
+                <h3>{{book.publishinghouse.name}}</h3>
+                {% endif %}
 
-                    <h3>{{book.description}}</h3>
-                    <h3>{{book.price}} €</h3>
+                <h3>{{book.description}}</h3>
+                <h3>{{book.price}} €</h3>
 
                 {% if book.imageUrl %}
                     <img src={{book.imageUrl}} class="small" alt={{book.title}}>

@@ -34,17 +34,17 @@ class PublishingHouseController extends AbstractController
     public function create(PublishingHouseRepository $repository, Request $request):Response
     {
         
-        $PH= new PublishingHouse();
+        $PHouse= new PublishingHouse();
 
-        $form= $this->createForm(AdminPublishingHouseType::class , $PH);
+        $form= $this->createForm(AdminPublishingHouseType::class , $PHouse);
       
         $form->handleRequest($request); 
       
         if($form->isSubmitted() && $form->isValid()){
 
-            $validPH = $form->getData();
+            $validPHouse = $form->getData();
 
-            $repository->save($validPH, true);
+            $repository->save($validPHouse, true);
 
             return $this->redirectToRoute('app_publishinghouse_list');
 
@@ -56,4 +56,42 @@ class PublishingHouseController extends AbstractController
             'form' => $formView,
         ]);
     }
+
+    #[Route('/admin/publishing_house/update/{id}', name: 'app_publishinghouse_update')]
+    public function update(int $id, PublishingHouseRepository $repository, Request $request):Response {
+       
+        $PHouse = $repository->find($id);
+
+        $form= $this->createForm(AdminPublishingHouseType::class , $PHouse);
+      
+        $form->handleRequest($request); 
+      
+        if($form->isSubmitted() && $form->isValid()){
+
+            $validPHouse = $form->getData();
+
+            $repository->save($validPHouse, true);
+
+            return $this->redirectToRoute('app_publishinghouse_list');
+
+        }
+
+        $formView= $form->createView();
+
+        return $this->render('publishing_house/update.html.twig' , [
+            'form' => $formView,
+            'PubHouse' => $PHouse,
+        ]);
+    }
+
+    #[Route('/admin/publishing_house/remove/{id}', name: 'app_publishinghouse_remove')]
+    public function remove(int $id, PublishingHouseRepository $repository): Response
+    {
+        $PHouse= $repository->find($id);
+       
+        $repository->remove($PHouse, true);
+        
+        return $this->redirectToRoute('app_publishinghouse_list');
+    }
+
 }

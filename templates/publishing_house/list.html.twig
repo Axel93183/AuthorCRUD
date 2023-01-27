@@ -40,9 +40,13 @@
                 <h2>{{ph.name}}</h2>
                 <h3>{{ph.country}}</h3>
                 <h3>{{ph.description}}</h3>
-          
-                {# <a href=" {{  path('app_book_update', {'id': book.id}) }}">Modifier avec SymfonyForm</a><br>
-                <a href=" {{  path('app_book_remove', {'id': book.id}) }}">Supprimer</a>  #}
+
+                {% for book in ph.Books %}
+                    <h5>{{book.title}}</h5>
+                 {% endfor %}
+
+                <a href=" {{  path('app_publishinghouse_update', {'id': ph.id}) }}">Modifier</a><br>
+                <a href=" {{  path('app_publishinghouse_remove', {'id': ph.id}) }}">Supprimer</a> 
             </div>
 
     {% endfor %}

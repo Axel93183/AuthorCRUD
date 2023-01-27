@@ -2,9 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\PublishingHouseRepository;
+use App\Entity\Book;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use App\Repository\PublishingHouseRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: PublishingHouseRepository::class)]
 class PublishingHouse
@@ -22,6 +25,14 @@ class PublishingHouse
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $country = null;
+
+    #[ORM\OneToMany(mappedBy: 'publishingHouse', targetEntity: Book::class)]
+    private Collection $Books;
+
+    public function __construct()
+    {
+        $this->Books = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -60,6 +71,36 @@ class PublishingHouse
     public function setCountry(?string $country): self
     {
         $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Book>
+     */
+    public function getBooks(): Collection
+    {
+        return $this->Books;
+    }
+
+    public function addBook(Book $book): self
+    {
+        if (!$this->Books->contains($book)) {
+            $this->Books->add($book);
+            $book->setPublishingHouse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBook(Book $book): self
+    {
+        if ($this->Books->removeElement($book)) {
+            // set the owning side to null (unless already changed)
+            if ($book->getPublishingHouse() === $this) {
+                $book->setPublishingHouse(null);
+            }
+        }
 
         return $this;
     }

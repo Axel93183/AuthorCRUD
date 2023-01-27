@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\BookRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use App\Entity\PublishingHouse;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\BookRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 class Book
@@ -33,6 +34,9 @@ class Book
 
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'books')]
     private Collection $categories;
+
+    #[ORM\ManyToOne(inversedBy: 'Books')]
+    private ?PublishingHouse $publishingHouse = null;
 
     public function __construct()
     {
@@ -124,6 +128,18 @@ class Book
     public function removeCategory(Category $category): self
     {
         $this->categories->removeElement($category);
+
+        return $this;
+    }
+
+    public function getPublishingHouse(): ?PublishingHouse
+    {
+        return $this->publishingHouse;
+    }
+
+    public function setPublishingHouse(?PublishingHouse $publishingHouse): self
+    {
+        $this->publishingHouse = $publishingHouse;
 
         return $this;
     }

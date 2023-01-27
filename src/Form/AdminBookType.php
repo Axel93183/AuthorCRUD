@@ -6,6 +6,7 @@ namespace App\Form;
 use App\Entity\Book;
 use App\Entity\Author;
 use App\Entity\Category;
+use App\Entity\PublishingHouse;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -56,6 +57,14 @@ class AdminBookType extends AbstractType
             // Utilisé pour rendre une boîte de sélection, des cases à cocher ou des radios.
             'multiple' => true,
             'expanded' => true,
+        ])
+        ->add('publishingHouse', EntityType::class, [
+            'label' => 'Maison d\'édition ',
+            'required' => false,
+            // Spécifie l'entité que l'on veut pouvoir selectionner
+            'class' => PublishingHouse::class,
+            // Spécifie la propriété de la classe Author que l'on veut afficher -> ICI: author.name
+            'choice_label' => 'name',
         ])
         ->add('Ajouter', SubmitType::class)
         ;
