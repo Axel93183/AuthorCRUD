@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Author;
 use App\Form\AdminAuthorType;
+use App\Form\SearchAuthorType;
+use App\DTO\SearchAuthorCriteria;
 use App\Repository\AuthorRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AuthorController extends AbstractController
 {
@@ -43,11 +45,22 @@ class AuthorController extends AbstractController
 
     #[Route('/admin/auteurs', name: 'app_author_list')]
 
-    public function list(AuthorRepository $repository)
+    public function list(AuthorRepository $repository, Request $request)
     {
-        $authors = $repository->findAll();
+         //1. Création des critéres de recherche
+         $criteria = new SearchAuthorCriteria();
+
+         //2. Création du formulaire
+         $form = $this->createForm(SearchAuthorType::class, $criteria);
+ 
+         //3. Remplir le formulaire avec les critéres de recherche de l'utilisateur
+         $form->handleRequest($request);
+
+          //4. récupérer les livres selon les critéres donnés
+         $authors = $repository->findByAuthorCriteria($criteria);
 
         return $this->render('author/list.html.twig', [
+            'form' => $form->createView(),
             'authors' => $authors
         ]);
     }

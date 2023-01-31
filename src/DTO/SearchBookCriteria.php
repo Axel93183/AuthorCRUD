@@ -16,7 +16,3 @@ class SearchBookCriteria
 
     public ?float $maxPrice = null;
 }
-
-
-
-

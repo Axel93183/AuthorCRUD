@@ -91,7 +91,7 @@ class BookRepository extends ServiceEntityRepository
 
     public function findByCriteria(SearchBookCriteria $criteria): array
     {
-        //Création du query builder
+        //Création du query builder qui interroge la table book
         $queryBuilder = $this->createQueryBuilder('book'); 
 
         //Filtrer les résultats selon le titre si c'est spécifié

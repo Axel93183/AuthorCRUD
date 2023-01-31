@@ -19,7 +19,7 @@ class SearchBookType extends AbstractType
     {
         $builder
         ->add('title', TextType::class, [
-            'label' => 'Titre de livre : ',
+            'label' => 'Titre du livre : ',
             'required' => false
         ])
         ->add('authors', EntityType::class,[
