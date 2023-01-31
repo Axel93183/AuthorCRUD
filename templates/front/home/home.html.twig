@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page d'accueil{% endblock %}
+
+{% block stylesheets %}
+  
+    <style>
+        /* pour center l'ensemble de la page */
+        .center {
+        width: 300px;
+        border-collapse: collapse;
+        }
+
+        /* pour ajouter une bordure à chaque categorie */
+        .book-list {
+        border: solid 2px #3498db;
+        text-align: left;
+        padding: 40px;
+        }
+
+        .small {
+        width: 100px;
+        height: 100px;
+        }
+    </style>
+
+{% endblock %}
+
+{% block body %}
+
+<h1>{% block pageTitle %}Nos derniers livres{% endblock %}</h1>
+
+{% block subTitle %} {% endblock %}
+
+   <div class="center">
+
+    {% for book in books %}
+
+            <div class="book-list">
+
+                <h2>Titre: {{book.title}}</h2>
+
+                {% if book.author %}
+                <h3>Auteur: {{book.author.name}}</h3>
+                {% endif %}
+                
+                <h5>Catégories</h5>
+                {% for cat in book.categories %}
+                    <a href="{{ path('app_front_category_display' , {id: cat.id} )}}">{{cat.name}}</a>
+                {% endfor %}
+{# si erreur : Impossible to access an attribute ("name") on a null variable Verifier si une maison d'edition a ete affecte a un livre #}
+                {% if book.publishinghouse %}
+                <h3>Maison d'édition: {{book.publishinghouse.name}}</h3>
+                {% endif %}
+
+                {# <h3>{{book.description}}</h3> #}
+                <h3>Prix: {{book.price}} €</h3>
+
+                {# {% if book.imageUrl %}
+                    <img src={{book.imageUrl}} class="small" alt={{book.title}}>
+                {% endif %} #}
+                       
+            </div>
+
+    {% endfor %}
+
+</div>
+
+    
+        
+{% endblock %}

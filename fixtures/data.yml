@@ -20,13 +20,6 @@ App\Entity\Author:
     description: "<fr_FR:realText(100)>"
     imageUrl: "<imageUrl()>"
 
-App\Entity\Book:
-  book_{1..25}:
-    title: "<fr_FR:word()>"
-    price: "<randomFloat(2, 10, 20)>"
-    description: "<fr_FR:realText(100)>"
-    imageUrl: "<imageUrl()>"
-  
 App\Entity\PublishingHouse:
   house_1:
     name: Galimard
@@ -36,3 +29,22 @@ App\Entity\PublishingHouse:
     name: "<fr_FR:company()>"
     description: "<fr_FR:realText(100)>"
     country: "<fr_FR:countryCode()>"
+
+App\Entity\Book:
+  book_1:
+    title: "Harry Potter"
+    price: 25
+    author: "@author_1"
+    description: "<fr_FR:realText(100)>"
+    imageUrl: "<imageUrl()>"
+    categories: "5x @category_*"
+    publishingHouse: "@house_*"
+  book_{2..50}:
+    title: "<fr_FR:word()>"
+    price: "<randomFloat(2, 10, 20)>"
+    author: "@author_*"
+    description: "<fr_FR:realText(100)>"
+    imageUrl: "<imageUrl()>"
+    categories: "5x @category_*"
+    publishingHouse: "@house_*"
+      

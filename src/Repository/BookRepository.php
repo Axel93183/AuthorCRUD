@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Book;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\DTO\SearchBookCriteria;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Book>
@@ -63,4 +64,70 @@ class BookRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function findLastTwenty(): array //
+    {
+        $queryBuilder = $this->createQueryBuilder('book');//créer la requete pour book
+
+        return $queryBuilder-> orderBy('book.price', 'DESC') //
+                            -> setMaxResults(20) //
+                            -> getQuery()//ecrire la requete
+                            -> getResult();//recuperer les resultats de la requete
+
+    }
+
+    public function findBookByCategory(int $id): array //
+    {
+        $queryBuilder = $this->createQueryBuilder('book');//créer la requete pour book
+
+        return $queryBuilder-> leftJoin('book.categories', 'category')//jointure entre les livres et les catégories
+                            -> andWhere('category.id = :id')//condition sur le id de la category
+                            -> setParameter('id' , $id) // paramétre à ajouter pour la protection contre les injections SQL
+                            -> orderBy('book.price', 'DESC') //
+                            -> getQuery()
+                            -> getResult();
+
+    }
+
+    public function findByCriteria(SearchBookCriteria $criteria): array
+    {
+        //Création du query builder
+        $queryBuilder = $this->createQueryBuilder('book'); 
+
+        //Filtrer les résultats selon le titre si c'est spécifié
+        if($criteria->title){
+           $queryBuilder->andWhere('book.title LIKE :title')
+                        ->setParameter('title', "%$criteria->title%");
+        }
+
+        //Filtrer les résultats par auteurs
+        if(!empty($criteria->authors)){
+           $queryBuilder->leftJoin('book.author', 'author')// le join est fait entre book et author
+                        ->andWhere('author.id IN (:authorIds)')
+                        ->setParameter('authorIds' , $criteria->authors);
+        }
+
+        //Filtrer les résultats par catégories
+        if(!empty($criteria->categories)){
+           $queryBuilder->leftJoin('book.categories', 'category')// le join est fait entre book et category
+                        ->andWhere('category.id IN (:catIds)')
+                        ->setParameter('catIds' , $criteria->categories);
+        }
+
+        //Filtrer par les prix minimals
+        if($criteria->minPrice){
+           $queryBuilder->andWhere('book.price >= :minPrice')
+                        ->setParameter('minPrice' , $criteria->minPrice);
+        }
+
+        //Filtrer par les prix maximals
+        if($criteria->maxPrice){
+           $queryBuilder->andWhere('book.price <= :maxPrice')
+                        ->setParameter('maxPrice' , $criteria->maxPrice);
+        }
+
+
+        return $queryBuilder->getQuery() //ecrire la requete
+                            ->getResult(); //recuperer les resultats de la requete
+    }
 }
