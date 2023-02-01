@@ -5,12 +5,15 @@ namespace App\Form;
 use App\Entity\Author;
 use App\Entity\Category;
 use App\DTO\SearchBookCriteria;
+use App\Entity\PublishingHouse;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class SearchBookType extends AbstractType
@@ -39,12 +42,45 @@ class SearchBookType extends AbstractType
             'required' => false
             ])
         ->add('minPrice', MoneyType::class,[
-            'label' => 'Prix Minimum',
+            'label' => 'Prix Minimum ',
             'required' => false
         ])
         ->add('maxPrice', MoneyType::class,[
-            'label' => 'Prix Maximum',
+            'label' => 'Prix Maximum ',
             'required' => false
+        ])
+        ->add('publishingHouses', EntityType::class,[
+            'label' => 'Maison d\'édition : ',
+            'class' => PublishingHouse::class,
+            'choice_label' => 'name',
+            'multiple' => true,
+            'expanded' => true,
+            'required' => false
+        ])
+        ->add('orderBy', ChoiceType::class, [
+            'label'=>'Trier par: ',
+            'required'=> true,
+            'choices'=>[
+                'Identifiant'=>'id',
+                'Titre'=>'title',
+                'Prix'=>'price'
+            ],
+        ])
+        ->add('direction', ChoiceType::class, [
+            'label'=>'Sens du tri: ',
+            'required'=> true,
+            'choices'=>[
+                'Décroissant'=>'DESC',
+                'Croissant'=>'ASC'
+            ],
+        ])
+        ->add('limit', NumberType::class, [
+            'label'=>'Nombre de résultats: ',
+            'required'=> true,
+        ])
+        ->add('page', NumberType::class, [
+            'label'=>'Page: ',
+            'required'=> true,
         ])
         ->add('send', SubmitType::class, [
             'label' => "Envoyer",

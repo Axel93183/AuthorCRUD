@@ -38,11 +38,13 @@ class HomeController extends AbstractController
 
         //4. récupérer les livres selon les critéres donnés
         $books = $repository->findByCriteria($criteria);
-
+        $nbResult = count($books);
         //5. affichage du twig
         return $this->render('front/home/search.html.twig', [
             'form' => $form->createView(),
-            'books' => $books
+            'books' => $books,
+            'nbResult' => $nbResult,
+           
         ]);
 
     }

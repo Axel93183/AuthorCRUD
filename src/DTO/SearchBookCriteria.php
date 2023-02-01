@@ -15,4 +15,15 @@ class SearchBookCriteria
     public ?float $minPrice = null;
 
     public ?float $maxPrice = null;
+
+    public ?array $publishingHouses = [];
+
+    public ?string $orderBy = 'title';
+
+    public ?string $direction = 'ASC';
+    
+    public ?int $limit = 100;
+
+    public ?int $page = 1;
+
 }

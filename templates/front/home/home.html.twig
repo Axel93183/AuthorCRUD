@@ -31,7 +31,7 @@
 <h1>{% block pageTitle %}Nos derniers livres{% endblock %}</h1>
 
 {% block subTitle %} {% endblock %}
-
+{% block subTitle2 %}{% endblock %}
    <div class="center">
 
     {% for book in books %}
@@ -44,7 +44,7 @@
                 <h3>Auteur: {{book.author.name}}</h3>
                 {% endif %}
                 
-                <h5>Catégories</h5>
+                <h3>Catégories:</h3>
                 {% for cat in book.categories %}
                     <a href="{{ path('app_front_category_display' , {id: cat.id} )}}">{{cat.name}}</a>
                 {% endfor %}
