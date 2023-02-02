@@ -30,6 +30,12 @@
 
 <h1>{% block pageTitle %}Liste des livres{% endblock %}</h1>
 
+<hr/>
+
+ {{ form(form) }}
+
+<hr/>
+
     <nav>
        
         <a href=" {{  path('app_book_create') }}">Ajouter un livre à la liste avec Symfonyform</a>

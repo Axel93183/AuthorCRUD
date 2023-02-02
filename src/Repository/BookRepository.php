@@ -69,7 +69,7 @@ class BookRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('book');//créer la requete pour book
 
-        return $queryBuilder-> orderBy('book.price', 'DESC') //
+        return $queryBuilder-> orderBy('book.updatedAt', 'DESC') //
                             -> setMaxResults(20) //
                             -> getQuery()//ecrire la requete
                             -> getResult();//recuperer les resultats de la requete
@@ -89,7 +89,7 @@ class BookRepository extends ServiceEntityRepository
 
     }
 
-    public function findByCriteria(SearchBookCriteria $criteria): array
+    public function findBookByCriteria(SearchBookCriteria $criteria): array
     {
         //Création du query builder qui interroge la table book
         $queryBuilder = $this->createQueryBuilder('book'); 

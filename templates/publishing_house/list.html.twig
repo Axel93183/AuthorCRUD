@@ -27,7 +27,7 @@
 <h1>{% block pageTitle %}Liste des Maisons d'édition{% endblock %}</h1>
 
     <nav>
-        <a href=" {{  path('app_publishinghouse_create') }}">Ajouter une Maisons d'édition</a>
+        <a href=" {{  path('app_publishing_house_create') }}">Ajouter une Maisons d'édition</a>
     </nav>
     <br>
 
@@ -45,8 +45,8 @@
                     <h5>{{book.title}}</h5>
                  {% endfor %}
 
-                <a href=" {{  path('app_publishinghouse_update', {'id': ph.id}) }}">Modifier</a><br>
-                <a href=" {{  path('app_publishinghouse_remove', {'id': ph.id}) }}">Supprimer</a> 
+                <a href=" {{  path('app_publishing_house_update', {'id': ph.id}) }}">Modifier</a><br>
+                <a href=" {{  path('app_publishing_house_remove', {'id': ph.id}) }}">Supprimer</a> 
             </div>
 
     {% endfor %}

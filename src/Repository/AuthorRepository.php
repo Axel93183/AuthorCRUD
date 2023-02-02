@@ -65,7 +65,7 @@ class AuthorRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-        public function findByAuthorCriteria(SearchAuthorCriteria $criteria): array
+        public function findAuthorByCriteria(SearchAuthorCriteria $criteria): array
         {
             $queryBuilder = $this->createQueryBuilder('author');
 

@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use App\Entity\PublishingHouse;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\BookRepository;
 use Doctrine\Common\Collections\Collection;
+use Gedmo\Mapping\Annotation\Timestampable;
 use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
@@ -37,6 +39,14 @@ class Book
 
     #[ORM\ManyToOne(inversedBy: 'Books')]
     private ?PublishingHouse $publishingHouse = null;
+
+    #[Timestampable(on: 'create')]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?DateTimeInterface $createdAt = null;
+
+    #[Timestampable(on: 'update')]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $updatedAt = null;
 
     public function __construct()
     {
@@ -140,6 +150,30 @@ class Book
     public function setPublishingHouse(?PublishingHouse $publishingHouse): self
     {
         $this->publishingHouse = $publishingHouse;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

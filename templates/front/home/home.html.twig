@@ -55,7 +55,7 @@
 
                 {# <h3>{{book.description}}</h3> #}
                 <h3>Prix: {{book.price}} €</h3>
-
+                <h3> Dernière modification {{ book.updatedAt|date('d/m/Y à H:i', 'Europe/Paris') }} </h3>
                 {# {% if book.imageUrl %}
                     <img src={{book.imageUrl}} class="small" alt={{book.title}}>
                 {% endif %} #}

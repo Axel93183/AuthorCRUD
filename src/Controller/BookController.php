@@ -4,11 +4,17 @@ namespace App\Controller;
 
 use App\Entity\Book;
 use App\Form\AdminBookType;
+use App\Form\SearchBookType;
+use App\DTO\SearchBookCriteria;
 use App\Repository\BookRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+//Permet de contrôler l'accès et le restreindre à l'administrateur / redirige vers la page de login
+#[IsGranted('ROLE_ADMIN')]
 
 class BookController extends AbstractController
 {
@@ -55,11 +61,22 @@ class BookController extends AbstractController
     }
 
     #[Route('admin/livres', name: 'app_book_list')]
-    public function list(BookRepository $repository): Response
+    public function list(BookRepository $repository, Request $request): Response
     {
-        $books= $repository->findAll();
+        //1. Création des critéres de recherche
+        $criteria = new SearchBookCriteria();
+
+        //2. Création du formulaire
+        $form = $this->createForm(SearchBookType::class, $criteria);
+
+        //3. Remplir le formulaire avec les critéres de recherche de l'utilisateur
+        $form->handleRequest($request);
+
+         //4. récupérer les livres selon les critéres donnés
+        $books = $repository->findBookByCriteria($criteria);
 
         return $this->render('book/list.html.twig', [
+            'form' => $form->createView(),
             'Books' => $books,
         ]);
     }

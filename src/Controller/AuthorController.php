@@ -10,7 +10,11 @@ use App\Repository\AuthorRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+//Permet de contrôler l'accès et le restreindre à l'administrateur / redirige vers la page de login
+#[IsGranted('ROLE_ADMIN')]
 
 class AuthorController extends AbstractController
 {
@@ -57,7 +61,7 @@ class AuthorController extends AbstractController
          $form->handleRequest($request);
 
           //4. récupérer les livres selon les critéres donnés
-         $authors = $repository->findByAuthorCriteria($criteria);
+         $authors = $repository->findAuthorByCriteria($criteria);
 
         return $this->render('author/list.html.twig', [
             'form' => $form->createView(),

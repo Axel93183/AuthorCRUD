@@ -8,7 +8,11 @@ use App\Repository\PublishingHouseRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+//Permet de contrôler l'accès et le restreindre à l'administrateur / redirige vers la page de login
+#[IsGranted('ROLE_ADMIN')]
 
 class PublishingHouseController extends AbstractController
 {
@@ -20,7 +24,7 @@ class PublishingHouseController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/publishing_house', name: 'app_publishinghouse_list')]
+    #[Route('/admin/publishing_house', name: 'app_publishing_house_list')]
     public function list(PublishingHouseRepository $repository): Response
     {
         $PH= $repository->findAll();
@@ -30,7 +34,7 @@ class PublishingHouseController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/publishing_house/new', name: 'app_publishinghouse_create')]
+    #[Route('/admin/publishing_house/new', name: 'app_publishing_house_create')]
     public function create(PublishingHouseRepository $repository, Request $request):Response
     {
         
@@ -46,7 +50,7 @@ class PublishingHouseController extends AbstractController
 
             $repository->save($validPHouse, true);
 
-            return $this->redirectToRoute('app_publishinghouse_list');
+            return $this->redirectToRoute('app_publishing_house_list');
 
         }
 
@@ -57,7 +61,7 @@ class PublishingHouseController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/publishing_house/update/{id}', name: 'app_publishinghouse_update')]
+    #[Route('/admin/publishing_house/update/{id}', name: 'app_publishing_house_update')]
     public function update(int $id, PublishingHouseRepository $repository, Request $request):Response {
        
         $PHouse = $repository->find($id);
@@ -72,7 +76,7 @@ class PublishingHouseController extends AbstractController
 
             $repository->save($validPHouse, true);
 
-            return $this->redirectToRoute('app_publishinghouse_list');
+            return $this->redirectToRoute('app_publishing_house_list');
 
         }
 
@@ -84,14 +88,14 @@ class PublishingHouseController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/publishing_house/remove/{id}', name: 'app_publishinghouse_remove')]
+    #[Route('/admin/publishing_house/remove/{id}', name: 'app_publishing_house_remove')]
     public function remove(int $id, PublishingHouseRepository $repository): Response
     {
         $PHouse= $repository->find($id);
        
         $repository->remove($PHouse, true);
         
-        return $this->redirectToRoute('app_publishinghouse_list');
+        return $this->redirectToRoute('app_publishing_house_list');
     }
 
 }
